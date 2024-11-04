@@ -2,6 +2,7 @@ import json
 from collections.abc import Callable
 
 from ..Graphic import Graphic
+from ..GraphicState import GraphicState
 from ..GraphicTyping import Color
 
 
@@ -41,14 +42,12 @@ class Button(Graphic):
         self.__background_color = value
         self.__notify()
 
-    def get_state(self) -> str:
-        state = {"graphic": "Button", "text": self.text, "text_color": self.text_color, "background_color": self.background_color}
-        return json.dumps(state)
+    def get_state(self) -> GraphicState:
+        return GraphicState("button", super().uuid, text=self.text, text_color=self.text_color, background_color=self.background_color)
 
-    def set_state(self, state: str) -> None:
-        state_dict = json.loads(state)
-        if "pressed" in state_dict:
-            if state_dict["pressed"]:
-                self.__on_click()
-        else:
-            raise ValueError("Invalid state data")
+    def set_state(self, state: GraphicState) -> None:
+        pressed: bool = getattr(state, "pressed", None)
+        if not isinstance(pressed, bool):
+            raise ValueError("Invalid state data. Did not find boolean value for 'pressed'")
+        if pressed:
+            self.__on_click()

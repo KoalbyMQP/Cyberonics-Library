@@ -1,8 +1,9 @@
 import json
+import uuid
 
 from ..Graphic import Graphic
 from ..GraphicTyping import TextAlignment, Color
-
+from ..GraphicState import GraphicState
 
 class BodyText(Graphic):
     def __init__(self, text: str, alignment: TextAlignment = TextAlignment.LEFT, color: Color = Color.PRIMARY,
@@ -12,7 +13,7 @@ class BodyText(Graphic):
         self.__color = color
         self.__bold = bold
         self.__italic = italic
-        super().__init__()
+        super().__init__(None)
         self.__notify()
 
     @property
@@ -60,14 +61,8 @@ class BodyText(Graphic):
         self.__italic = value
         self.__notify()
 
-    def get_state(self) -> str:
-        state = { "graphic": "BodyText", "text": self.text, "alignment": self.alignment }
-        return json.dumps(state)
+    def get_state(self) -> GraphicState:
+        return GraphicState("BodyText", super().uuid, text=self.__text, alignments=self.__alignment, color=self.__color, bold=self.__bold, italic=self.__italic)
 
-    def set_state(self, state: str) -> None:
-        state_dict = json.loads(state)
-        if "text" in state_dict and "alignment" in state_dict:
-            self.text = state_dict["text"]
-            self.alignment = TextAlignment(state_dict["alignment"])
-        else:
-            raise ValueError("Invalid state data")
+    def set_state(self, state: GraphicState) -> None:
+        raise ValueError("BodyText can not be set by the client")
