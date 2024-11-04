@@ -1,4 +1,3 @@
-import json
 from collections.abc import Callable
 
 from ..Graphic import Graphic

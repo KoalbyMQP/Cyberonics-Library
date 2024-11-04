@@ -1,6 +1,4 @@
-import uuid
-
-from cyberonics_py.graphics import DeviceCell, Graphic
+from cyberonics_py.graphics import Graphic
 from cyberonics_py.graphics.GraphicState import GraphicState
 
 

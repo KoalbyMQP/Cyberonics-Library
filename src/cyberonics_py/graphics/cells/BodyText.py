@@ -1,6 +1,3 @@
-import json
-import uuid
-
 from ..Graphic import Graphic
 from ..GraphicTyping import TextAlignment, Color
 from ..GraphicState import GraphicState

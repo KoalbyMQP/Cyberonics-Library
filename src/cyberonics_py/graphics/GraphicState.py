@@ -1,6 +1,5 @@
 import json
 
-
 class GraphicState:
     def __init__(self, graphic_type, uuid, **kwargs):
         self.type = graphic_type

@@ -1,5 +1,3 @@
-import json
-
 from ..Graphic import Graphic
 from ..GraphicState import GraphicState
 from ..GraphicTyping import Color
