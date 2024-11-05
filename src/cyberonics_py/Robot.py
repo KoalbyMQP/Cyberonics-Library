@@ -1,8 +1,6 @@
-from abc import ABC, abstractmethod
-from collections.abc import Callable
+from abc import ABC
 from typing import Optional
-
-from Device import Device
+from .Device import Device
 
 
 class Robot(ABC):

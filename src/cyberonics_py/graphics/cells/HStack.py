@@ -1,5 +1,5 @@
-from cyberonics_py.graphics import Graphic
-from cyberonics_py.graphics.GraphicState import GraphicState
+from ..Graphic import Graphic
+from ..GraphicState import GraphicState
 
 
 class HStack(Graphic):

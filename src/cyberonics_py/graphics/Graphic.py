@@ -3,8 +3,8 @@ from typing import Any, Optional
 
 import uuid
 
-from cyberonics_py import DeviceProperty
-from cyberonics_py.graphics.GraphicState import GraphicState
+from ..DeviceProperty import DeviceProperty
+from .GraphicState import GraphicState
 
 
 class Graphic(ABC):

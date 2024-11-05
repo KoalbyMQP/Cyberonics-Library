@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from graphics.GraphicCell import GraphicCell
-from DeviceProperty import DeviceProperty
+from .graphics.GraphicCell import GraphicCell
+from .DeviceProperty import DeviceProperty
 from typing import Optional, Dict, Any, Callable
 from uuid import uuid4
 
