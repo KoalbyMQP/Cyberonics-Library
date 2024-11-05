@@ -10,7 +10,7 @@ class Device(ABC):
         super().__init__()
         self.__properties = properties
         for p in properties:
-            p.add_listener()
+            p.add_listener(self.__property_updated)
         if graphic_cell is None:
             self.device_cell = GraphicCell([])
         self.device_cell = graphic_cell
