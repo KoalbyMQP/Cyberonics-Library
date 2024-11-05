@@ -4,7 +4,7 @@ from typing import TypeVar
 from ..Graphic import Graphic
 from ..GraphicState import GraphicState
 from ..GraphicTyping import Color
-from ... import DeviceProperty
+from ...DeviceProperty import DeviceProperty
 
 T = TypeVar("T", bound=Number)
 class Slider(Graphic):
