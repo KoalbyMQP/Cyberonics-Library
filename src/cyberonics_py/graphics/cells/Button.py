@@ -12,7 +12,7 @@ class Button(Graphic):
         self.__text_color = text_color
         self.__background_color = background_color
         super().__init__(None)
-        self.__notify()
+        super()._notify()
 
     @property
     def text(self) -> str:
@@ -21,7 +21,7 @@ class Button(Graphic):
     @text.setter
     def text(self, value: str) -> None:
         self.__text = value
-        self.__notify()
+        super()._notify()
 
     @property
     def text_color(self) -> Color:
@@ -30,7 +30,7 @@ class Button(Graphic):
     @text_color.setter
     def text_color(self, value: Color) -> None:
         self.__text_color = value
-        self.__notify()
+        super()._notify()
 
     @property
     def background_color(self) -> Color:
@@ -39,7 +39,7 @@ class Button(Graphic):
     @background_color.setter
     def background_color(self, value: Color) -> None:
         self.__background_color = value
-        self.__notify()
+        super()._notify()
 
     def get_state(self) -> GraphicState:
         return GraphicState("button", super().uuid, text=self.text, text_color=self.text_color, background_color=self.background_color)

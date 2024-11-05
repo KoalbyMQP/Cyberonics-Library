@@ -16,7 +16,7 @@ class HStack(Graphic):
     @alignment.setter
     def alignment(self, value: str) -> None:
         self.__alignment = value
-        self.__notify()
+        super()._notify()
 
     @property
     def space_between(self) -> int:
@@ -25,7 +25,7 @@ class HStack(Graphic):
     @space_between.setter
     def space_between(self, value: int) -> None:
         self.__space_between = value
-        self.__notify()
+        super()._notify()
 
     def get_state(self) -> GraphicState:
         graphics = [graphic.get_state().encode() for graphic in self.graphics.values()]

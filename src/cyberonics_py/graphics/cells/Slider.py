@@ -26,7 +26,7 @@ class Slider(Graphic):
             raise ValueError("Invalid step value")
         self.__color = color
         super().__init__(managed_property)
-        self.__notify()
+        super()._notify()
 
     @property
     def value(self) -> T:
@@ -37,7 +37,7 @@ class Slider(Graphic):
         if self.__min_value > value or value > self.__max_value:
             raise ValueError("Attempted to set value out of bounds")
         self.managed_property.value = value
-        self.__notify()
+        super()._notify()
 
     @property
     def min_value(self) -> T:
@@ -46,7 +46,7 @@ class Slider(Graphic):
     @min_value.setter
     def min_value(self, min_value: T) -> None:
         self.__min_value = min_value
-        self.__notify()
+        super()._notify()
 
     @property
     def max_value(self) -> T:
@@ -55,7 +55,7 @@ class Slider(Graphic):
     @max_value.setter
     def max_value(self, max_value: T) -> None:
         self.__max_value = max_value
-        self.__notify()
+        super()._notify()
 
     @property
     def step(self) -> T:
@@ -64,7 +64,7 @@ class Slider(Graphic):
     @step.setter
     def step(self, step: T) -> None:
         self.__step = step
-        self.__notify()
+        super()._notify()
 
     @property
     def color(self) -> Color:
@@ -73,7 +73,7 @@ class Slider(Graphic):
     @color.setter
     def color(self, color: Color) -> None:
         self.__color = color
-        self.__notify()
+        super()._notify()
 
     def get_state(self) -> GraphicState:
         return GraphicState("Slider", super().uuid, value=self.value, min_value=self.min_value, max_value=self.max_value, step=self.step, color=self.color)

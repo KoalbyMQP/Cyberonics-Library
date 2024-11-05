@@ -13,7 +13,7 @@ class Switch(Graphic):
         self.__on_color = on_color
         self.__off_color = off_color
         super().__init__(managed_property)
-        self.__notify()
+        super()._notify()
 
     @property
     def value(self) -> bool:
@@ -22,7 +22,7 @@ class Switch(Graphic):
     @value.setter
     def value(self, value: bool) -> None:
         self.managed_property.value = value
-        self.__notify()
+        super()._notify()
 
     @property
     def on_color(self) -> Color:
@@ -31,7 +31,7 @@ class Switch(Graphic):
     @on_color.setter
     def on_color(self, value: Color) -> None:
         self.__on_color = value
-        self.__notify()
+        super()._notify()
 
     @property
     def off_color(self) -> Color:
@@ -40,7 +40,7 @@ class Switch(Graphic):
     @off_color.setter
     def off_color(self, value: Color) -> None:
         self.__off_color = value
-        self.__notify()
+        super()._notify()
 
     def get_state(self) -> GraphicState:
         return GraphicState("Switch", super().uuid, value=self.value, on_color=self.on_color, off_color=self.off_color)
@@ -52,4 +52,4 @@ class Switch(Graphic):
         if not isinstance(on, bool):
             raise ValueError("Invalid state data. 'on' must be a boolean")
         self.managed_property.value = on
-        self.__notify()
+        super()._notify()

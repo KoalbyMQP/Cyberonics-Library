@@ -11,7 +11,7 @@ class BodyText(Graphic):
         self.__bold = bold
         self.__italic = italic
         super().__init__(None)
-        self.__notify()
+        super()._notify()
 
     @property
     def text(self) -> str:
@@ -20,7 +20,7 @@ class BodyText(Graphic):
     @text.setter
     def text(self, value: str) -> None:
         self.__text = value
-        self.__notify()
+        super()._notify()
 
     @property
     def alignment(self) -> TextAlignment:
@@ -29,7 +29,7 @@ class BodyText(Graphic):
     @alignment.setter
     def alignment(self, value: TextAlignment) -> None:
         self.__alignment = value
-        self.__notify()
+        super()._notify()
 
     @property
     def color(self) -> Color:
@@ -38,7 +38,7 @@ class BodyText(Graphic):
     @color.setter
     def color(self, value: Color) -> None:
         self.__color = value
-        self.__notify()
+        super()._notify()
 
     @property
     def bold(self) -> bool:
@@ -47,7 +47,7 @@ class BodyText(Graphic):
     @bold.setter
     def bold(self, value: bool) -> None:
         self.__bold = value
-        self.__notify()
+        super()._notify()
 
     @property
     def italic(self) -> bool:
@@ -56,7 +56,7 @@ class BodyText(Graphic):
     @italic.setter
     def italic(self, value: bool) -> None:
         self.__italic = value
-        self.__notify()
+        super()._notify()
 
     def get_state(self) -> GraphicState:
         return GraphicState("BodyText", super().uuid, text=self.__text, alignment=self.__alignment, color=self.__color, bold=self.__bold, italic=self.__italic)

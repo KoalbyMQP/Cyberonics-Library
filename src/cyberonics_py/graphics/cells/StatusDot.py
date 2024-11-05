@@ -8,11 +8,11 @@ class StatusDot(Graphic):
         self.__color = color
         self.__flash = False
         super().__init__(None)
-        self.__notify()
+        super()._notify()
 
     def flash(self):
         self.__flash = True
-        self.__notify()
+        super()._notify()
         self.__flash = False
 
     @property
@@ -22,7 +22,7 @@ class StatusDot(Graphic):
     @color.setter
     def color(self, value: Color) -> None:
         self.__color = value
-        self.__notify()
+        super()._notify()
 
 
     def get_state(self) -> GraphicState:

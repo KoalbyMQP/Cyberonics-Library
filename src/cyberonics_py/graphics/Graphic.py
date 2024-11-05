@@ -20,7 +20,7 @@ class Graphic(ABC):
 
 
     # Called when the state of the graphic changes
-    def __notify(self) -> None:
+    def _notify(self) -> None:
         pass
 
     @abstractmethod

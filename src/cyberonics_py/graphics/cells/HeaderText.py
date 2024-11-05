@@ -12,7 +12,7 @@ class HeaderText(Graphic):
         self.__bold = bold
         self.__italic = italic
         super().__init__(None)
-        self.__notify()
+        super()._notify()
 
     @property
     def text(self) -> str:
@@ -21,7 +21,7 @@ class HeaderText(Graphic):
     @text.setter
     def text(self, value: str) -> None:
         self.__text = value
-        self.__notify()
+        super()._notify()
 
     @property
     def alignment(self) -> TextAlignment:
@@ -30,7 +30,7 @@ class HeaderText(Graphic):
     @alignment.setter
     def alignment(self, value: TextAlignment) -> None:
         self.__alignment = value
-        self.__notify()
+        super()._notify()
 
     @property
     def color(self) -> Color:
@@ -39,7 +39,7 @@ class HeaderText(Graphic):
     @color.setter
     def color(self, value: Color) -> None:
         self.__color = value
-        self.__notify()
+        super()._notify()
 
     @property
     def bold(self) -> bool:
@@ -48,7 +48,7 @@ class HeaderText(Graphic):
     @bold.setter
     def bold(self, value: bool) -> None:
         self.__bold = value
-        self.__notify()
+        super()._notify()
 
     @property
     def italic(self) -> bool:
@@ -57,7 +57,7 @@ class HeaderText(Graphic):
     @italic.setter
     def italic(self, value: bool) -> None:
         self.__italic = value
-        self.__notify()
+        super()._notify()
 
     def get_state(self) -> GraphicState:
         return GraphicState("HeaderText", super().uuid, text=self.text, alignment=self.alignment, color=self.color, bold=self.bold, italic=self.italic)
