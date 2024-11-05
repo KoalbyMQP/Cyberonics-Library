@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import TypeVar
+from typing import TypeVar, Generic
 
 from ..Graphic import Graphic
 from ..GraphicState import GraphicState
@@ -7,11 +7,12 @@ from ..GraphicTyping import Color
 from ...DeviceProperty import DeviceProperty
 
 T = TypeVar("T", bound=Number)
-class Slider(Graphic):
+class Slider(Graphic, Generic[T]):
     def __init__(self, managed_property: DeviceProperty[T], min_value: T, max_value: T, step: T = 1, color: Color = Color.INFO) -> None:
-        if not isinstance(T, Number):
-            raise TypeError(f"{T} is not a numeric type")
-
+        if not all([isinstance(x, Number) for x in (min_value, max_value, step)]):
+            raise TypeError(f"min_val {min_value}, max_val {max_value}, step {step} must all be numeric types.")
+        if not type(min_value) == type(max_value) == type(step):
+            raise TypeError(f"min_val {min_value}, max_val {max_value}, step {step} must all be the same type.")
         if not managed_property.mutable:
             raise ValueError("Managed property must be mutable")
 
@@ -80,7 +81,7 @@ class Slider(Graphic):
 
     def set_state(self, state: GraphicState) -> None:
         val: T = getattr(state, "value", None)
-        if not isinstance(val, type(T)):
+        if not isinstance(val, self.managed_property.type):
             raise ValueError(f"Invalid state data. Did not find {T} value for 'value'")
 
         if val < self.__min_value or val > self.__max_value:
