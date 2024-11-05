@@ -10,7 +10,7 @@ class GraphicState:
         return json.dumps(self.__dict__)
 
     @staticmethod
-    def decode(state_str):
+    def decode(state_str) -> 'GraphicState':
         state_dict = json.loads(state_str)
         graphic_type = state_dict.pop('type')
         uuid = state_dict.pop('uuid')

@@ -16,11 +16,11 @@ class Switch(Graphic):
         self.__notify()
 
     @property
-    def on(self) -> bool:
+    def value(self) -> bool:
         return self.managed_property.value
 
-    @on.setter
-    def on(self, value: bool) -> None:
+    @value.setter
+    def value(self, value: bool) -> None:
         self.managed_property.value = value
         self.__notify()
 
@@ -43,7 +43,7 @@ class Switch(Graphic):
         self.__notify()
 
     def get_state(self) -> GraphicState:
-        return GraphicState("Switch", super().uuid, on=self.on, on_color=self.on_color, off_color=self.off_color)
+        return GraphicState("Switch", super().uuid, value=self.value, on_color=self.on_color, off_color=self.off_color)
 
     def set_state(self, state: GraphicState) -> None:
         on: bool = getattr(state, "on", None)

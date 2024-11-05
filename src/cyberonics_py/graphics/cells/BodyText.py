@@ -59,7 +59,7 @@ class BodyText(Graphic):
         self.__notify()
 
     def get_state(self) -> GraphicState:
-        return GraphicState("BodyText", super().uuid, text=self.__text, alignments=self.__alignment, color=self.__color, bold=self.__bold, italic=self.__italic)
+        return GraphicState("BodyText", super().uuid, text=self.__text, alignment=self.__alignment, color=self.__color, bold=self.__bold, italic=self.__italic)
 
     def set_state(self, state: GraphicState) -> None:
         raise ValueError("BodyText can not be set by the client")
