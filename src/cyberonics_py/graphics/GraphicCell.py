@@ -1,4 +1,4 @@
 from Graphic import Graphic
-class DeviceCell:
+class GraphicCell:
     def __init__(self, graphics: list[Graphic]):
         self.graphics = graphics

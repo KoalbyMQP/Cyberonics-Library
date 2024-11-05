@@ -11,7 +11,7 @@ class Button(Graphic):
         self.__on_click = onclick
         self.__text_color = text_color
         self.__background_color = background_color
-        super().__init__()
+        super().__init__(None)
         self.__notify()
 
     @property
