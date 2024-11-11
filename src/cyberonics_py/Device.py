@@ -6,7 +6,7 @@ from uuid import uuid5, NAMESPACE_DNS
 
 
 class Device(ABC):
-    def __init__(self, properties: [DeviceProperty], graphic_cell: Optional[GraphicCell] = None):
+    def __init__(self, identifier, properties: [DeviceProperty], graphic_cell: Optional[GraphicCell] = None):
         super().__init__()
         self.__properties = properties
         for p in properties:
@@ -15,7 +15,7 @@ class Device(ABC):
             self.device_cell = GraphicCell([])
         self.device_cell = graphic_cell
         self.__listeners = []
-        self.__uuid = uuid5(NAMESPACE_DNS, f"{self.__class__.__name__}-{id(self)}")
+        self.__uuid = uuid5(NAMESPACE_DNS, identifier)
 
     @property
     def uuid(self) -> uuid5:
