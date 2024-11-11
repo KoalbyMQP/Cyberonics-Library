@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from .graphics.GraphicCell import GraphicCell
 from .DeviceProperty import DeviceProperty
 from typing import Optional, Dict, Any, Callable
-from uuid import uuid4
+from uuid import uuid5, NAMESPACE_DNS
 
 
 class Device(ABC):
@@ -15,10 +15,10 @@ class Device(ABC):
             self.device_cell = GraphicCell([])
         self.device_cell = graphic_cell
         self.__listeners = []
-        self.__uuid = uuid4()
+        self.__uuid = uuid5(NAMESPACE_DNS, f"{self.__class__.__name__}-{id(self)}")
 
     @property
-    def uuid(self) -> uuid4:
+    def uuid(self) -> uuid5:
         return self.__uuid
 
     def get_state(self) -> Dict[str, Any]:
