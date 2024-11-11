@@ -23,7 +23,7 @@ class Device(ABC):
 
     def get_state(self) -> Dict[str, Any]:
         states = [graphic.get_state() for graphic in self.device_cell.graphics]
-        return {state.uuid: state.encode() for state in states}
+        return {str(state.uuid): state.encode() for state in states}
 
     """
     Adds a listener and returns its ID. This id can be passed to `free_listener` to remove the listener.
