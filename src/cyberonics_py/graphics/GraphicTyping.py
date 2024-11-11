@@ -1,11 +1,11 @@
 from enum import Enum
 
-class TextAlignment(Enum):
+class TextAlignment(str, Enum):
     LEFT = "left"
     CENTER = "center"
     RIGHT = "right"
 
-class Color(Enum):
+class Color(str, Enum):
     PRIMARY = "#007bff"
     SECONDARY = "#6c757d"
     LIGHT = "#f8f9fa"
