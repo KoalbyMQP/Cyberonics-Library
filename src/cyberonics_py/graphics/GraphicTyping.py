@@ -6,7 +6,7 @@ class TextAlignment(str, Enum):
     RIGHT = "right"
 
 class Color(str, Enum):
-    PRIMARY = "#007bff"
+    PRIMARY = "#61DAFB"
     SECONDARY = "#6c757d"
     LIGHT = "#f8f9fa"
     BACKGROUND = "#2a2a2c"
