@@ -1,9 +1,9 @@
 from ..Graphic import Graphic
-from ..GraphicTyping import TextAlignment, Color
+from ..GraphicTyping import Alignment, Color
 from ..GraphicState import GraphicState
 
 class BodyText(Graphic):
-    def __init__(self, text: str, alignment: TextAlignment = TextAlignment.LEFT, color: Color = Color.PRIMARY,
+    def __init__(self, text: str, alignment: Alignment = Alignment.LEFT, color: Color = Color.PRIMARY,
                  bold: bool = False, italic: bool = False) -> None:
         self.__text = text
         self.__alignment = alignment
@@ -23,11 +23,11 @@ class BodyText(Graphic):
         super()._notify()
 
     @property
-    def alignment(self) -> TextAlignment:
+    def alignment(self) -> Alignment:
         return self.__alignment
 
     @alignment.setter
-    def alignment(self, value: TextAlignment) -> None:
+    def alignment(self, value: Alignment) -> None:
         self.__alignment = value
         super()._notify()
 

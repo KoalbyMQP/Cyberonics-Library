@@ -1,6 +1,6 @@
 from enum import Enum
 
-class TextAlignment(str, Enum):
+class Alignment(str, Enum):
     LEFT = "left"
     CENTER = "center"
     RIGHT = "right"
