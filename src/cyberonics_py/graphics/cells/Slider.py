@@ -8,7 +8,7 @@ from ...DeviceProperty import DeviceProperty
 
 T = TypeVar("T", bound=Number)
 class Slider(Graphic, Generic[T]):
-    def __init__(self, managed_property: DeviceProperty[T], min_value: T, max_value: T, step: T = 1, color: Color = Color.INFO) -> None:
+    def __init__(self, managed_property: DeviceProperty[T], min_value: T, max_value: T, step: T = 1, color: Color = Color.PRIMARY) -> None:
         if not all([isinstance(x, Number) for x in (min_value, max_value, step)]):
             raise TypeError(f"min_val {min_value}, max_val {max_value}, step {step} must all be numeric types.")
         if not type(min_value) == type(max_value) == type(step):
