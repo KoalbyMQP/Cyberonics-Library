@@ -1,7 +1,6 @@
-from .. import Alignment
 from ..Graphic import Graphic
 from ..GraphicState import GraphicState
-from ..GraphicTyping import Color
+from ..GraphicTyping import Color, Alignment
 from ... import DeviceProperty
 
 
