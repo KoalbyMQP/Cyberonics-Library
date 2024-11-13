@@ -1,7 +1,7 @@
 from ..Graphic import Graphic
 from ..GraphicState import GraphicState
 from ..GraphicTyping import Color, Alignment
-from ... import DeviceProperty
+from ...DeviceProperty import DeviceProperty
 
 
 class StatusDot(Graphic):
