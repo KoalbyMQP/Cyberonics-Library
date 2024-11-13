@@ -42,7 +42,7 @@ class Button(Graphic):
         super()._notify()
 
     def get_state(self) -> GraphicState:
-        return GraphicState("button", super().uuid, text=self.text, text_color=self.text_color, background_color=self.background_color)
+        return GraphicState("Button", super().uuid, text=self.text, text_color=self.text_color, background_color=self.background_color)
 
     def set_state(self, state: GraphicState) -> None:
         pressed: bool = getattr(state, "pressed", None)
