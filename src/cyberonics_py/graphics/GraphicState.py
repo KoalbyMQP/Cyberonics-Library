@@ -29,7 +29,7 @@ class GraphicState:
             if isinstance(value, Enum):
                 return value.value
             if isinstance(value, str):
-                return value.strip()
+                return value.replace(" ", "").strip().lower()
             return value
 
         self_dict = {key: normalize(value) for key, value in self.__dict__.items()}
