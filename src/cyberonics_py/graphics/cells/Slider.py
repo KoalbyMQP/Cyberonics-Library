@@ -82,7 +82,10 @@ class Slider(Graphic, Generic[T]):
     def set_state(self, state: GraphicState) -> None:
         val: T = getattr(state, "value", None)
         if not isinstance(val, self.managed_property.type):
-            raise ValueError(f"Invalid state data. Did not find {T} value for 'value'")
+            try:
+                val = self.managed_property.type(val)
+            except:
+                raise ValueError(f"Invalid state data. Did not find {T} value for 'value'")
 
         if val < self.__min_value or val > self.__max_value:
             raise ValueError("Attempted to set value out of bounds")
