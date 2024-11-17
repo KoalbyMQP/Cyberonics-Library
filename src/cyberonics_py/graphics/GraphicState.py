@@ -36,4 +36,4 @@ class GraphicState:
         other_dict = {key: normalize(value) for key, value in other.__dict__.items()}
         print(self_dict)
         print(other_dict)
-        return self_dict == other_dict
+        return str(self_dict).lower() == str(other_dict).lower()
