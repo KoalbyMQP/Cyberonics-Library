@@ -29,9 +29,6 @@ class Device(ABC):
     def set_state(self, state: Dict[str, Any] or str) -> None:
         if type(state) == str:
             state = json.loads(state)
-        print("Setting state")
-        print(type(state))
-        print(state)
         for graphic in self.device_cell.graphics:
             graphic.set_state(state[str(graphic.uuid)])
 
