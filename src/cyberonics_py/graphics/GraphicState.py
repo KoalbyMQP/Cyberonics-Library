@@ -21,4 +21,7 @@ class GraphicState:
         return GraphicState(graphic_type, uuid_obj, **state)
 
     def __eq__(self, other):
+        print("comparing")
+        print(self.__dict__)
+        print(other.__dict__)
         return self.__dict__ == other.__dict__
