@@ -1,5 +1,5 @@
 # test/test_math_utils.py
-
+import asyncio
 import sys
 import os
 import pytest
@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../s
 import cyberonics_py as cyber
 import cyberonics_py.graphics as graphics
 
-def test_robot():
+async def run_robot():
     class Motor(Device):
         def __init__(self, name: str):
             self.speed = DeviceProperty(0., mutable=True)
@@ -32,3 +32,14 @@ def test_robot():
             self.motor2= Motor("Motor 2")
             super().__init__([self.motor1, self.motor2])
 
+    ava = Ava()
+    while True:
+        ava.motor1.speed.value = 0.5
+        ava.motor2.speed.value = -0.5
+        await asyncio.sleep(1)
+        ava.motor1.speed.value = -0.5
+        ava.motor2.speed.value = 0.5
+        await asyncio.sleep(1)
+
+if __name__ == "__main__":
+    asyncio.run(run_robot())
