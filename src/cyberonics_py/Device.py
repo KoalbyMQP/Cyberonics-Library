@@ -1,3 +1,4 @@
+import json
 from abc import ABC, abstractmethod
 from .graphics.GraphicCell import GraphicCell
 from .DeviceProperty import DeviceProperty
@@ -25,7 +26,9 @@ class Device(ABC):
         states = [graphic.get_state() for graphic in self.device_cell.graphics]
         return {str(state.uuid): state.encode() for state in states}
 
-    def set_state(self, state: Dict[str, Any]) -> None:
+    def set_state(self, state: Dict[str, Any] or str) -> None:
+        if type(state) == str:
+            state = json.loads(state)
         print("Setting state")
         print(type(state))
         print(state)
