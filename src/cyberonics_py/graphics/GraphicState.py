@@ -20,3 +20,6 @@ class GraphicState:
         graphic_type = state_dict.pop('type')
         uuid_obj = UUID(state_dict.pop('uuid'))
         return GraphicState(graphic_type, uuid_obj, **state_dict)
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__

@@ -63,4 +63,5 @@ class SubText(Graphic):
         return GraphicState("SubText", super().uuid, text=self.text, alignment=self.alignment, color=self.color, bold=self.bold, italic=self.italic)
 
     def set_state(self, state: GraphicState) -> None:
-        raise ValueError("SubText can not be set by the client")
+        if self.get_state() != state:
+            raise ValueError("SubText can not be set by the client")

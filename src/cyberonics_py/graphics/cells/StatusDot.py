@@ -33,4 +33,5 @@ class StatusDot(Graphic):
         return GraphicState("StatusDot", super().uuid, color=self.__color.value, flash=self.__flash, alignment=self.__alignment)
 
     def set_state(self, state: GraphicState) -> None:
-        raise ValueError("StatusDot cannot by set by the client")
+        if self.get_state() != state:
+            raise ValueError("StatusDot cannot by set by the client")
