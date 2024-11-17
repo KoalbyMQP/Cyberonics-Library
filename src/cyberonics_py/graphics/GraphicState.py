@@ -15,11 +15,10 @@ class GraphicState:
         return json.dumps(state_dict)
 
     @staticmethod
-    def decode(state_str) -> 'GraphicState':
-        state_dict = json.loads(state_str)
-        graphic_type = state_dict.pop('type')
-        uuid_obj = UUID(state_dict.pop('uuid'))
-        return GraphicState(graphic_type, uuid_obj, **state_dict)
+    def decode(state: dict[str, any]) -> 'GraphicState':
+        graphic_type = state.pop('type')
+        uuid_obj = UUID(state.pop('uuid'))
+        return GraphicState(graphic_type, uuid_obj, **state)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
