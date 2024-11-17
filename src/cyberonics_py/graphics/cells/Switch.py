@@ -10,7 +10,7 @@ class Switch(Graphic):
             raise ValueError("Managed property must be mutable")
 
         self.managed_property = managed_property
-        managed_property.add_listener(lambda _: super()._notify())
+        managed_property.add_listener(lambda _: super(Switch, self)._notify())
         self.__on_color = on_color
         self.__off_color = off_color
         super().__init__(managed_property)

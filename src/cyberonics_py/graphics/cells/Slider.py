@@ -17,7 +17,7 @@ class Slider(Graphic, Generic[T]):
             raise ValueError("Managed property must be mutable")
 
         self.managed_property: DeviceProperty[T] = managed_property
-        managed_property.add_listener(lambda _: super()._notify())
+        managed_property.add_listener(lambda _: super(Slider, self)._notify())
         self.__min_value: T = min_value
         self.__max_value: T = max_value
         self.__step: T = step
