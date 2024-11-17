@@ -9,6 +9,7 @@ class StatusDot(Graphic):
         if color.type != Color:
             raise ValueError("color must be of type Color")
         self.__color = color
+        color.add_listener(lambda _: super()._notify())
         self.__flash = False
         self.__alignment = alignment
         super().__init__(None)
