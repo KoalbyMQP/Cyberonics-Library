@@ -27,6 +27,7 @@ class Device(ABC):
 
     def set_state(self, state: Dict[str, Any]) -> None:
         print("Setting state")
+        print(type(state))
         print(state)
         for graphic in self.device_cell.graphics:
             graphic.set_state(state[str(graphic.uuid)])
