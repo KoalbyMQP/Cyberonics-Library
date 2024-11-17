@@ -26,6 +26,8 @@ class Device(ABC):
         return {str(state.uuid): state.encode() for state in states}
 
     def set_state(self, state: Dict[str, Any]) -> None:
+        print("Setting state")
+        print(state)
         for graphic in self.device_cell.graphics:
             graphic.set_state(state[str(graphic.uuid)])
 
