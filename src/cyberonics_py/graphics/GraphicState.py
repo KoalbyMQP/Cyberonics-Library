@@ -1,4 +1,5 @@
 import json
+from enum import Enum
 from uuid import UUID, uuid4
 
 
@@ -21,7 +22,17 @@ class GraphicState:
         return GraphicState(graphic_type, uuid_obj, **state)
 
     def __eq__(self, other):
-        print("comparing")
-        print(self.__dict__)
-        print(other.__dict__)
-        return self.__dict__ == other.__dict__
+        if not isinstance(other, type(self)):
+            return False
+
+        def normalize(value):
+            if isinstance(value, Enum):
+                return value.value
+            if isinstance(value, str):
+                return value.strip()
+            return value
+
+        self_dict = {key: normalize(value) for key, value in self.__dict__.items()}
+        other_dict = {key: normalize(value) for key, value in other.__dict__.items()}
+
+        return self_dict == other_dict
