@@ -46,9 +46,9 @@ class Switch(Graphic):
         return GraphicState("Switch", super().uuid, value=self.value, on_color=self.on_color, off_color=self.off_color)
 
     def set_state(self, state: GraphicState) -> None:
-        on: bool = getattr(state, "on", None)
+        on: bool = getattr(state, "value", None)
         if on is None:
-            raise ValueError("Invalid state data. Missing key 'on'")
+            raise ValueError("Invalid state data. Missing key 'value'")
         if not isinstance(on, bool):
             raise ValueError("Invalid state data. 'on' must be a boolean")
         self.managed_property.value = on
