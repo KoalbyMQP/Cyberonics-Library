@@ -5,6 +5,8 @@ from .DeviceProperty import DeviceProperty
 from typing import Optional, Dict, Any, Callable
 from uuid import uuid5, NAMESPACE_DNS
 
+from .graphics.GraphicState import GraphicState
+
 
 class Device(ABC):
     def __init__(self, identifier, properties: [DeviceProperty], graphic_cell: Optional[GraphicCell] = None):
@@ -30,7 +32,11 @@ class Device(ABC):
         if type(state) == str:
             state = json.loads(state)
         for graphic in self.device_cell.graphics:
-            graphic.set_state(state[str(graphic.uuid)])
+            try:
+                graphic_state = GraphicState.decode(state[str(graphic.uuid)])
+                graphic.set_state(graphic_state)
+            except KeyError:
+                raise ValueError("Invalid state")
 
     """
     Adds a listener and returns its ID. This id can be passed to `free_listener` to remove the listener.
