@@ -10,5 +10,5 @@ readme = "README.md"
 authors = [{ name = "Skyler Wiernik", email = "skwiernik@wpi.edu" }]
 dependencies = []  # Add your dependencies here
 
-[tool.setuptools]
-packages = ["find:src"]
+[tool.setuptools.packages.find]
+where = ["src"]
