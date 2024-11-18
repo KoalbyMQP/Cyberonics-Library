@@ -48,4 +48,4 @@ class DeviceProperty(Generic[T]):
         else:
             self.__value = new_value
         for listener in self.__listeners:
-            listener(self, new_value)
+            listener(self)
