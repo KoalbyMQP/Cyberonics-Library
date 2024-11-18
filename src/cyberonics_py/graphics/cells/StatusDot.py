@@ -35,6 +35,6 @@ class StatusDot(Graphic):
 
     def set_state(self, state: GraphicState) -> None:
         if self.get_state() != state:
-            print("Is: ", self.get_state())
-            print("Now: ", state)
+            print("Is: ", self.get_state().encode())
+            print("Now: ", state.encode())
             raise ValueError("StatusDot cannot by set by the client")
