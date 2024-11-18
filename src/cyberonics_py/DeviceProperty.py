@@ -45,10 +45,7 @@ class DeviceProperty(Generic[T]):
                 new_value = self.type(new_value)
             except ValueError:
                 raise ValueError(f"Cannot convert '{new_value}' to {self.type.__name__}")
-        elif not isinstance(new_value, self.type):
-            raise ValueError(f"Expected value of type {self.type.__name__}, got {type(new_value).__name__}")
-        if new_value == self.__value:
-            return
-        self.__value = new_value
+        else:
+            self.__value = new_value
         for listener in self.__listeners:
             listener(self, new_value)
