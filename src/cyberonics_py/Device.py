@@ -1,8 +1,8 @@
 import json
-from abc import ABC, abstractmethod
+from abc import ABC
 from .graphics.GraphicCell import GraphicCell
 from .DeviceProperty import DeviceProperty
-from typing import Optional, Dict, Any, Callable
+from typing import Optional, Callable
 from uuid import uuid5, NAMESPACE_DNS
 
 from .graphics.GraphicState import GraphicState
@@ -24,20 +24,21 @@ class Device(ABC):
     def uuid(self) -> uuid5:
         return self.__uuid
 
-    def get_state(self) -> Dict[str, Any]:
+    def get_state(self) -> dict[str, any]:
         states = [graphic.get_state() for graphic in self.device_cell.graphics]
         return {str(state.uuid): state.encode() for state in states}
 
-    def set_state(self, state: Dict[str, Any] or str) -> None:
+    def set_state(self, state: dict[str, any] or str) -> None:
         if type(state) == str:
-            state = json.loads(state)
+            state: dict[str, any] = json.loads(state)
         for graphic in self.device_cell.graphics:
             try:
                 graphic_state = GraphicState.decode(state[str(graphic.uuid)])
                 graphic.set_state(graphic_state)
             except KeyError:
                 print(state)
-                print("graphics: ", self.device_cell.graphics)
+                print("graphics: ", [g.uuid for g in self.device_cell.graphics])
+                print("state: ", [k for k in state.keys()])
                 raise ValueError("Invalid state")
 
     """
