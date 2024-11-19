@@ -36,6 +36,8 @@ class Device(ABC):
                 graphic_state = GraphicState.decode(state[str(graphic.uuid)])
                 graphic.set_state(graphic_state)
             except KeyError:
+                print(state)
+                print("graphics: ", self.device_cell.graphics)
                 raise ValueError("Invalid state")
 
     """
