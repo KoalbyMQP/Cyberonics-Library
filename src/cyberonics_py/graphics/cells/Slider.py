@@ -39,7 +39,6 @@ class Slider(Graphic, Generic[T]):
         if self.__min_value > value or value > self.__max_value:
             raise ValueError("Attempted to set value out of bounds")
         self.managed_property.value = value
-        super()._notify()
 
     @property
     def min_value(self) -> T:

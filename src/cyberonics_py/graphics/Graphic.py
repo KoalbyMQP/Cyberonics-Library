@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any, Optional, Callable
 
 import uuid
 
@@ -11,7 +11,15 @@ class Graphic(ABC):
     def __init__(self, managed_property: Optional[DeviceProperty[Any]]):
         self.managed_property = managed_property
         self.__uuid = uuid.uuid4()
+        self.__listeners = []
         super().__init__()
+
+    """
+    Listens to visual changes of the graphic. This does *not* notify on changes to managed properties.
+    You must listen to the managed property directly.
+    """
+    def add_graphic_listener(self, listener: Callable[['Graphic'], None]) -> None:
+        listener(self)
 
 
     @property
@@ -19,9 +27,10 @@ class Graphic(ABC):
         return self.__uuid
 
 
-    # Called when the state of the graphic changes
+    # Called when the visual state of the graphic changes. NOT on updates to the managed property
     def _notify(self) -> None:
-        pass
+        for listener in self.__listeners:
+            listener(self)
 
     @abstractmethod
     def get_state(self) -> GraphicState:

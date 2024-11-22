@@ -13,9 +13,11 @@ class Device(ABC):
         super().__init__()
         self.__properties = properties
         for p in properties:
-            p.add_listener(self.__property_updated)
+            p.add_listener(self.__got_update)
         if graphic_cell is None:
             self.device_cell = GraphicCell([])
+        for graphic in self.device_cell.graphics:
+            graphic.add_graphic_listener(self.__got_update)
         self.device_cell = graphic_cell
         self.__listeners = []
         self.__uuid = uuid5(NAMESPACE_DNS, identifier)
@@ -53,6 +55,6 @@ class Device(ABC):
             raise ValueError("Invalid listener ID")
         self.__listeners.pop(listener_id - 1)
 
-    def __property_updated(self, _):
+    def __got_update(self, _):
         for listener in self.__listeners:
             listener(self)

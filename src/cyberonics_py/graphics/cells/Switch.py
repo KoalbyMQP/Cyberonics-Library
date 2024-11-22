@@ -23,7 +23,6 @@ class Switch(Graphic):
     @value.setter
     def value(self, value: bool) -> None:
         self.managed_property.value = value
-        super()._notify()
 
     @property
     def on_color(self) -> Color:
