@@ -19,7 +19,7 @@ class Graphic(ABC):
     You must listen to the managed property directly.
     """
     def add_graphic_listener(self, listener: Callable[['Graphic'], None]) -> None:
-        listener(self)
+        self.__listeners.append(listener)
 
 
     @property
