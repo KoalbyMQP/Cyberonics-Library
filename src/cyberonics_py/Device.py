@@ -15,8 +15,10 @@ class Device(ABC):
         for p in properties:
             p.add_listener(self.__got_update)
         if graphic_cell is None:
-            self.device_cell = GraphicCell([])
-        for graphic in self.device_cell.graphics:
+            self.graphic_cell = GraphicCell([])
+        else:
+            self.graphic_cell = graphic_cell
+        for graphic in self.graphic_cell.graphics:
             graphic.add_graphic_listener(self.__got_update)
         self.device_cell = graphic_cell
         self.__listeners = []
