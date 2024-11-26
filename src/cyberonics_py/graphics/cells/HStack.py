@@ -1,9 +1,10 @@
+from ..GraphicTyping import Alignment
 from ..Graphic import Graphic
 from ..GraphicState import GraphicState
 
 
 class HStack(Graphic):
-    def __init__(self, graphics: list[Graphic], alignment: str = "left", space_between = 5) -> None:
+    def __init__(self, graphics: list[Graphic], alignment: Alignment = Alignment.LEFT, space_between = 5) -> None:
         self.graphics = {graphic.uuid: graphic for graphic in graphics}
         self.__alignment = alignment
         self.__space_between = space_between
