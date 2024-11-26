@@ -3,7 +3,7 @@ from typing import TypeVar, Generic, Callable
 T = TypeVar('T')
 
 class DeviceProperty(Generic[T]):
-    def __init__(self, initial_value: T, mutable: bool) -> None:
+    def __init__(self, initial_value: T, mutable: bool = True) -> None:
         self.__value = initial_value
         self.__mutable = mutable
         self.type = type(initial_value)
