@@ -1,15 +1,19 @@
 from abc import ABC, abstractmethod
+from typing import Callable
+
 from .Robot import Robot
 
 
 class Target(ABC):
 
-    def __init__(self, robot: Robot):
+    def __init__(self, robot: Robot, shutdown_timeout: float = 0.5):
         self.robot = robot
+        self.shutdown_timeout = shutdown_timeout
 
     @abstractmethod
-    def run(self):
+    async def run(self):
         pass
 
     @abstractmethod
-    def shutdown(self, beat: ):
+    async def shutdown(self, beat: Callable[[], None]):
+        pass
