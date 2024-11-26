@@ -3,8 +3,9 @@ from typing import TypeVar, Generic, Callable
 T = TypeVar('T')
 
 class DeviceProperty(Generic[T]):
-    def __init__(self, initial_value: T, mutable: bool = True) -> None:
+    def __init__(self, initial_value: T, mutable: bool = True, constraints: [Callable[[T, T], bool]] = None) -> None:
         self.__value = initial_value
+        self.__constraints = constraints or []
         self.__mutable = mutable
         self.type = type(initial_value)
         self.__listeners = []
@@ -49,6 +50,9 @@ class DeviceProperty(Generic[T]):
             raise ValueError(f"Expected value of type {self.type.__name__}, got {type(new_value).__name__}")
         if new_value == self.__value:
             return
+        for constraint in self.__constraints:
+            if not constraint(self.__value, new_value):
+                raise ValueError(f"Value '{new_value}' does not meet constraint '{constraint.__name}'")
         self.__value = new_value
         for listener in self.__listeners:
             listener(self)
