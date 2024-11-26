@@ -3,13 +3,13 @@ from abc import ABC
 from .graphics.GraphicCell import GraphicCell
 from .DeviceProperty import DeviceProperty
 from typing import Optional, Callable
-from uuid import uuid5, NAMESPACE_DNS, uuid4
+from uuid import uuid4
 
 from .graphics.GraphicState import GraphicState
 
 
 class Device(ABC):
-    def __init__(self, identifier, properties: [DeviceProperty], graphic_cell: Optional[GraphicCell] = None):
+    def __init__(self, properties: [DeviceProperty], graphic_cell: Optional[GraphicCell] = None):
         super().__init__()
         self.__properties = properties
         for p in properties:
@@ -22,12 +22,11 @@ class Device(ABC):
             graphic.add_graphic_listener(self.__got_update)
         self.device_cell = graphic_cell
         self.__listeners = []
-        # self.__uuid = uuid5(NAMESPACE_DNS, identifier)
         self.__uuid = uuid4()
         self.__last_state = None
 
     @property
-    def uuid(self) -> uuid5:
+    def uuid(self) -> uuid4:
         return self.__uuid
 
     def get_state(self) -> dict[str, any]:
