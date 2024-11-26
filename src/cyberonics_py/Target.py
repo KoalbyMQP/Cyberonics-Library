@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Callable
+from typing import Callable, TYPE_CHECKING
 
-from .Robot import Robot
+if TYPE_CHECKING:
+    from .Robot import Robot
 
 
 class Target(ABC):
