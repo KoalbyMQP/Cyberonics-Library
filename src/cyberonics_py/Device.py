@@ -3,7 +3,7 @@ from abc import ABC
 from .graphics.GraphicCell import GraphicCell
 from .DeviceProperty import DeviceProperty
 from typing import Optional, Callable
-from uuid import uuid5, NAMESPACE_DNS
+from uuid import uuid5, NAMESPACE_DNS, uuid4
 
 from .graphics.GraphicState import GraphicState
 
@@ -22,7 +22,8 @@ class Device(ABC):
             graphic.add_graphic_listener(self.__got_update)
         self.device_cell = graphic_cell
         self.__listeners = []
-        self.__uuid = uuid5(NAMESPACE_DNS, identifier)
+        # self.__uuid = uuid5(NAMESPACE_DNS, identifier)
+        self.__uuid = uuid4()
         self.__last_state = None
 
     @property
