@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 class Target(ABC):
 
-    def __init__(self, robot: Robot, shutdown_timeout: float = 0.5):
+    def __init__(self, robot: 'Robot', shutdown_timeout: float = 0.5):
         self.robot = robot
         self.shutdown_timeout = shutdown_timeout
 
