@@ -5,7 +5,7 @@ from .Target import Target
 
 
 class Robot(ABC):
-    def __init__(self, devices: Optional[list[Device]], targets: Optional[list[Target]]):
+    def __init__(self, devices: Optional[list[Device]], targets: Optional[list[Target]] = None):
         self.__devices = devices or []
 
     @property
