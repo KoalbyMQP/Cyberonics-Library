@@ -86,7 +86,4 @@ class Slider(Graphic, Generic[T]):
                 val = self.managed_property.type(val)
             except:
                 raise ValueError(f"Invalid state data. Did not find {T} value for 'value'")
-
-        if val < self.__min_value or val > self.__max_value:
-            raise ValueError("Attempted to set value out of bounds")
         self.value = val
