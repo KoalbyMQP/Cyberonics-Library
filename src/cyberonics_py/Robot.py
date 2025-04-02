@@ -24,5 +24,9 @@ class Robot(ABC):
             raise Exception(f"Target {withName} not found")
         target.run()
 
+    @property
+    def is_running(self) -> bool:
+        return self.__active_target is not None
+
     def stop_execution(self):
         self.active_target.stop()
