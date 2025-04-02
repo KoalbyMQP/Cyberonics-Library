@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Callable, TYPE_CHECKING
+from typing import Callable, TYPE_CHECKING, final
+from multiprocessing import Process
+import asyncio
+import time
 
 if TYPE_CHECKING:
     from .Robot import Robot
@@ -11,15 +14,51 @@ class Target(ABC):
         self._name = name
         self.robot = robot
         self.shutdown_timeout = shutdown_timeout
+        self.__worker_process = None
 
     @property
     def name(self) -> str:
         return self._name
 
     @abstractmethod
-    async def run(self):
+    def _run(self) -> Process:
         pass
 
+    @final
+    def run(self):
+        self.__worker_process = self._run()
+
+
     @abstractmethod
-    async def shutdown(self, beat: Callable[[], None]):
+    async def _shutdown(self, beat: Callable[[], None]):
         pass
+
+    @final
+    def shutdown(self):
+        if self.__worker_process is None:
+            return
+
+        async def shutdown_task():
+            shutdown_complete = asyncio.Event()
+            last_heartbeat = time.monotonic()
+
+            def beat():
+                nonlocal last_heartbeat
+                last_heartbeat = time.monotonic()
+
+            async def monitor_shutdown():
+                while not shutdown_complete.is_set():
+                    await asyncio.sleep(0.1)
+                    if time.monotonic() - last_heartbeat > self.shutdown_timeout:
+                        if self.__worker_process.is_alive():
+                            print(f"[WARNING] Worker process '{self._name}' did not shut down in time. Terminating.")
+                            self.__worker_process.terminate()
+                            self.__worker_process.join()
+                        shutdown_complete.set()
+
+            monitor_task = asyncio.create_task(monitor_shutdown())
+            await self._shutdown(beat)
+            shutdown_complete.set()
+            await monitor_task
+
+        asyncio.create_task(shutdown_task())

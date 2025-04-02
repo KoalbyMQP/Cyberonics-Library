@@ -8,6 +8,7 @@ class Robot(ABC):
     def __init__(self, devices: Optional[list[Device]], targets: Optional[list[Target]] = None):
         self.__devices = devices or []
         self.__targets = {t.name: t for t in targets or []}
+        self.__active_target: Optional[Target] = None
 
     @property
     def devices(self) -> list[Device]:
@@ -18,7 +19,10 @@ class Robot(ABC):
         return self.__targets.values()
 
     def run_target(self, name: str):
-        target = self.__targets.get(withName)
+        target = self.__targets.get(name)
         if not target:
             raise Exception(f"Target {withName} not found")
         target.run()
+
+    def stop_execution(self):
+        self.active_target.stop()
