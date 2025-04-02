@@ -17,7 +17,7 @@ class Robot(ABC):
     def targets(self) -> list[Target]:
         return self.__targets.values()
 
-    def run_target(self, withName: str):
+    def run_target(self, name: str):
         target = self.__targets.get(withName)
         if not target:
             raise Exception(f"Target {withName} not found")
