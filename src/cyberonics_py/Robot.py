@@ -21,7 +21,7 @@ class Robot(ABC):
     def run_target(self, name: str):
         target = self.__targets.get(name)
         if not target:
-            raise Exception(f"Target {withName} not found")
+            raise Exception(f"Target {name} not found")
         target.run()
 
     @property
