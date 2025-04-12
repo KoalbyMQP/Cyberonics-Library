@@ -62,7 +62,11 @@ class Target(ABC):
             await monitor_task
         try:
             loop = asyncio.get_event_loop()
+            if loop.is_running():
+                loop.create_task(shutdown_task())
+            else:
+                loop.run_until_complete(shutdown_task())
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-        loop.create_task(shutdown_task())
+            loop.run_until_complete(shutdown_task())
