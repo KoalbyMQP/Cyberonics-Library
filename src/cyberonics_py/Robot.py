@@ -30,4 +30,5 @@ class Robot(ABC):
         return self.__active_target is not None
 
     def stop_execution(self):
-        self.active_target.shutdown()
+        self.__active_target.shutdown()
+        self.__active_target = None
