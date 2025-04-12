@@ -60,5 +60,9 @@ class Target(ABC):
             await self._shutdown(beat)
             shutdown_complete.set()
             await monitor_task
-
-        asyncio.create_task(shutdown_task())
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+        loop.create_task(shutdown_task())
