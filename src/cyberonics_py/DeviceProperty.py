@@ -41,13 +41,11 @@ class DeviceProperty(Generic[T]):
         if not self.__mutable:
             raise AttributeError("This property is read-only.")
 
-        if isinstance(new_value, str):
+        if not isinstance(new_value, self.type):
             try:
                 new_value = self.type(new_value)
             except ValueError:
-                raise ValueError(f"Cannot convert '{new_value}' to {self.type.__name__}")
-        elif not isinstance(new_value, self.type):
-            raise ValueError(f"Expected value of type {self.type.__name__}, got {type(new_value).__name__}")
+                raise ValueError(f"Expected value of type {self.type.__name__}, got {type(new_value).__name__}")
         if new_value == self.__value:
             return
         for constraint in self.__constraints:
