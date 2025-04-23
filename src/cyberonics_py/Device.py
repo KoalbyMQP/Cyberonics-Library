@@ -32,7 +32,6 @@ class Device(ABC):
     def get_state(self) -> dict[str, any]:
         graphic_states = [graphic.get_state() for graphic in self.device_cell.graphics]
         device_state = {str(state.uuid): state.encode() for state in graphic_states}
-        self.__last_state = device_state
         return device_state
 
     def set_state(self, state: dict[str, any] or str) -> None:
@@ -62,8 +61,10 @@ class Device(ABC):
         self.__listeners.pop(listener_id - 1)
 
     def __got_update(self, _):
-        if self.__last_state == self.get_state():
+        state = self.get_state()
+        if self.__last_state == state:
             print("Ignoring unchanged update for device", self.uuid)
             return
         for listener in self.__listeners:
             listener(self)
+        self.__last_state = state
