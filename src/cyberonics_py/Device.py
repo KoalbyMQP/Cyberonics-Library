@@ -75,6 +75,11 @@ class Device(ABC):
             print(state)
             print("------------------------------------------")
             return
+        else:
+            print("____Updated state to____")
+            print(state)
+            print("------------------------------------------")
+
         self.__last_state = state
         for listener in self.__listeners:
             listener(self)
