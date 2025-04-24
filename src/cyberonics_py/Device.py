@@ -62,7 +62,12 @@ class Device(ABC):
 
     def __got_update(self, _):
         state = self.get_state()
-        if self.__last_state and json.dumps(self.__last_state, sort_keys=True) == json.dumps(state, sort_keys=True):
+        state = {
+            k: json.loads(v) if isinstance(v, str) else v
+            for k, v in state.items()
+        }
+
+        if state == self.__last_state:
             print("Ignoring unchanged update for device", self.uuid)
             print(state)
             return
