@@ -69,7 +69,11 @@ class Device(ABC):
 
         if state == self.__last_state:
             print("Ignoring unchanged update for device", self.uuid)
+            print("-----------------NEW:---------------------")
             print(state)
+            print("-----------------OLD:---------------------")
+            print(state)
+            print("------------------------------------------")
             return
         self.__last_state = state
         for listener in self.__listeners:
