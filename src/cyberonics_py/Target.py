@@ -22,7 +22,7 @@ class Target(ABC):
         return self._name
 
     @abstractmethod
-    def _run(self):
+    def _run(self) -> threading.Thread:
         raise NotImplementedError
 
     @final
