@@ -22,7 +22,7 @@ class Target(ABC):
         return self._name
 
     @abstractmethod
-    def _run(self) -> Process:
+    def _run(self):
         raise NotImplementedError
 
     @final
