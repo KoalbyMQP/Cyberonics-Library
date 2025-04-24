@@ -1,3 +1,4 @@
+import threading
 from abc import ABC, abstractmethod
 from typing import Callable, TYPE_CHECKING, final
 from multiprocessing import Process
@@ -14,7 +15,7 @@ class Target(ABC):
         self._name = name
         self.robot = robot
         self.shutdown_timeout = shutdown_timeout
-        self.__worker_process = None
+        self.__worker: threading.Thread | None = None
 
     @property
     def name(self) -> str:
@@ -22,11 +23,11 @@ class Target(ABC):
 
     @abstractmethod
     def _run(self) -> Process:
-        pass
+        raise NotImplementedError
 
     @final
     def run(self):
-        self.__worker_process = self._run()
+        self.__worker = self._run()
 
 
     @abstractmethod
@@ -34,39 +35,47 @@ class Target(ABC):
         pass
 
     @final
-    def shutdown(self):
-        if self.__worker_process is None:
-            return
+    def shutdown(self) -> None:
+        if self.__worker is None:
+            return  # never started
 
-        async def shutdown_task():
-            shutdown_complete = asyncio.Event()
-            last_heartbeat = time.monotonic()
+        async def _shutdown_task():
+            shutdown_done = asyncio.Event()
+            last_beat = time.monotonic()
 
             def beat():
-                nonlocal last_heartbeat
-                last_heartbeat = time.monotonic()
+                nonlocal last_beat
+                last_beat = time.monotonic()
 
-            async def monitor_shutdown():
-                while not shutdown_complete.is_set():
+            async def watchdog():
+                # Poll every 100 ms for overdue heart‑beats
+                while not shutdown_done.is_set():
                     await asyncio.sleep(0.1)
-                    if time.monotonic() - last_heartbeat > self.shutdown_timeout:
-                        if self.__worker_process.is_alive():
-                            print(f"[WARNING] Worker process '{self._name}' did not shut down in time. Terminating.")
-                            self.__worker_process.terminate()
-                            self.__worker_process.join()
-                        shutdown_complete.set()
+                    overdue = time.monotonic() - last_beat > self.shutdown_timeout
+                    if overdue:
+                        if self.__worker.is_alive():
+                            # TODO: Create a better "hard shutdown"
+                            print(
+                                f"[WARNING] Worker thread '{self._name}' "
+                                f"did not shut down within {self.shutdown_timeout}s. Detaching.")
+                            # This just detaches the thread. It does not stop it from running.
+                            self.__worker.daemon = True
+                        shutdown_done.set()
 
-            monitor_task = asyncio.create_task(monitor_shutdown())
-            await self._shutdown(beat)
-            shutdown_complete.set()
-            await monitor_task
+            watchdog_task = asyncio.create_task(watchdog())
+            try:
+                await self._shutdown(beat)
+            finally:
+                shutdown_done.set()
+                await watchdog_task
+
         try:
             loop = asyncio.get_event_loop()
             if loop.is_running():
-                loop.create_task(shutdown_task())
+                loop.create_task(_shutdown_task())
             else:
-                loop.run_until_complete(shutdown_task())
+                loop.run_until_complete(_shutdown_task())
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-            loop.run_until_complete(shutdown_task())
+            loop.run_until_complete(_shutdown_task())
