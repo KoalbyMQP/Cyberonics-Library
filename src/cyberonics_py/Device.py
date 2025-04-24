@@ -29,8 +29,10 @@ class Device(ABC):
     def uuid(self) -> uuid4:
         return self.__uuid
 
-    def get_state(self) -> dict[str, GraphicState]:
-        return {str(graphic.uuid): graphic.get_state() for graphic in self.device_cell.graphics}
+    def get_state(self) -> dict[str, any]:
+        graphic_states = [graphic.get_state() for graphic in self.device_cell.graphics]
+        device_state = {str(state.uuid): state.encode() for state in graphic_states}
+        return device_state
 
     def set_state(self, state: dict[str, any] or str) -> None:
         if type(state) == str:
