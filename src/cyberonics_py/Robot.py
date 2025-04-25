@@ -1,4 +1,3 @@
-import sys
 from abc import ABC
 from typing import Optional
 from .Device import Device
@@ -19,12 +18,12 @@ class Robot(ABC):
     def targets(self) -> list[Target]:
         return self.__targets.values()
 
-    def run_target(self, name: str, stdout=sys.stdout, stderr=sys.stderr):
+    def run_target(self, name: str):
         target = self.__targets.get(name)
         if not target:
             raise Exception(f"Target {name} not found")
         self.__active_target = target
-        target.run(stdout, stderr)
+        target.run()
 
     @property
     def is_running(self) -> bool:
