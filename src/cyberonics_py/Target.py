@@ -1,3 +1,5 @@
+import contextlib
+import sys
 import threading
 from abc import ABC, abstractmethod
 from typing import Callable, TYPE_CHECKING, final
@@ -15,19 +17,24 @@ class Target(ABC):
         self._name = name
         self.robot = robot
         self.shutdown_timeout = shutdown_timeout
-        self.__worker: threading.Thread | None = None
+        self.worker: threading.Thread | None = None
 
     @property
     def name(self) -> str:
         return self._name
 
     @abstractmethod
-    def _run(self) -> threading.Thread:
+    def _run(self):
         raise NotImplementedError
 
     @final
-    def run(self):
-        self.__worker = self._run()
+    def run(self, stdout=sys.stdout, stderr=sys.stderr):
+        threading.Thread(target=self.__worker, args=(stdout, stderr)).start()
+
+    @final
+    def __worker(self, stdout=sys.stdout, stderr=sys.stderr):
+        with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+            self._run()
 
 
     @abstractmethod
