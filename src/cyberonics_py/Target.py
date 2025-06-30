@@ -4,6 +4,8 @@ from typing import Callable, TYPE_CHECKING, final
 from multiprocessing import Process
 import asyncio
 import time
+import os
+
 
 if TYPE_CHECKING:
     from .Robot import Robot
@@ -11,11 +13,16 @@ if TYPE_CHECKING:
 
 class Target(ABC):
 
+    
+
     def __init__(self, name: str, robot: 'Robot', shutdown_timeout: float = 0.5):
         self._name = name
         self.robot = robot
         self.shutdown_timeout = shutdown_timeout
         self.__worker: threading.Thread | None = None
+
+        self.stdout_callback: Callable[[str], None] | None = None
+        self.stderr_callback: Callable[[str], None] | None = None
 
     @property
     def name(self) -> str:
@@ -33,6 +40,13 @@ class Target(ABC):
     @abstractmethod
     async def _shutdown(self, beat: Callable[[], None]):
         pass
+
+    @final
+    def _read_output(self, stream, callback):
+        for line in iter(stream.readline, ''):
+            if callback:
+                callback(line.strip())
+        stream.close()
 
     @final
     def shutdown(self) -> None:

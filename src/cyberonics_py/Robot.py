@@ -18,12 +18,25 @@ class Robot(ABC):
     def targets(self) -> list[Target]:
         return self.__targets.values()
 
-    def run_target(self, name: str):
+    def run_target(self, name: str, stdout_callback=None, stderr_callback=None):
         target = self.__targets.get(name)
         if not target:
             raise Exception(f"Target {name} not found")
+        
+        target.stdout_callback = stdout_callback
+        target.stderr_callback = stderr_callback
+
         self.__active_target = target
         target.run()
+
+    
+
+    ##def run_test(self, name: str):
+        ##target = self.__targets.get(name)
+        ##if not target:
+            ##raise Exception(f"Target {name} not found")
+        ##self.__active_target = target
+        ##target.test()
 
     @property
     def is_running(self) -> bool:
